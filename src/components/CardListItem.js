@@ -1,10 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const CardListItem = ({ card }) => {
-  console.log("card", card);
+  const pokeDotCom = `https://www.pokemon.com/us/pokemon-tcg/pokemon-cards/?cardName=${
+    card.name || ""
+  }&evolvesFrom=${card.evolveFrom || ""}&particularArtist=${card.artist || ""}`;
   return (
     <li>
-      <a href="/">
+      <a
+        className="block h-full"
+        target="_blank"
+        href={pokeDotCom}
+        rel="noopener noreferrer"
+      >
         <img
           className="w-full h-auto"
           src={card.imageUrl}
@@ -13,6 +21,9 @@ const CardListItem = ({ card }) => {
       </a>
     </li>
   );
+};
+CardListItem.propTypes = {
+  card: PropTypes.object,
 };
 
 export default CardListItem;
