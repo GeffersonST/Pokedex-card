@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import PokeTypes from "./PokeTypes";
 
 const SearchForm = ({ setCards }) => {
+  const [searchTypes, setSearchTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setCards([]);
     try {
       const { data } = await axios.get(
-        `https://api.pokemontcg.io/v1/cards?name=${searchTerm}`
+        `https://api.pokemontcg.io/v1/cards?name=${searchTerm}&types=${
+          searchTypes.join(",") || ""
+        }`
       );
       setCards(data.cards);
       setSearchTerm("");
     } catch (err) {
       console.error(err);
+    }
+  };
+  const handleTypeChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setSearchTypes((current) => [...current, value]);
+    } else {
+      setSearchTypes(searchTypes.filter((type) => type !== value));
     }
   };
 
@@ -44,7 +57,7 @@ const SearchForm = ({ setCards }) => {
           Search
         </button>
       </div>
-      <div></div>
+      <PokeTypes onInputChange={handleTypeChange} />
     </form>
   );
 };
