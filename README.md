@@ -1,5 +1,5 @@
 <h1 align="center">
-  📰<br>Pokedex Card
+  🎴 <br>Pokedex Card
 </h1>
 
 <h4 align="center">
